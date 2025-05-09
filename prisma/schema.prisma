@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Participacao {
+  id           Int         @id @default(autoincrement())
+  astronauta   Astronauta  @relation(fields: [astronautaId], references: [id])
+  astronautaId Int
+  missao       Missao      @relation(fields: [missaoId], references: [id])
+  missaoId     Int
+
+  @@unique([astronautaId, missaoId]) // evita duplicidade de vínculo
+}
+
+model Astronauta {
+  id              Int             @id @default(autoincrement())
+  nome            String
+  especialidade   String
+  data_nascimento DateTime
+  participacoes   Participacao[]
+}
+
+model Missao {
+  id             Int             @id @default(autoincrement())
+  nome           String
+  data_inicio    DateTime
+  data_fim       DateTime
+  descricao      String
+  modulos        Modulo[]
+  participacoes  Participacao[]
+}
+model Modulo {
+  id        Int    @id @default(autoincrement())
+  nome      String
+  funcao    String
+  missao_id Int
+  missao    Missao @relation(fields: [missao_id], references: [id])
+}
