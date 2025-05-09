@@ -6,6 +6,9 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "strict": true,
-    "moduleResolution": "node"
-  }
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
 }
