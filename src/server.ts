@@ -17,5 +17,6 @@ app.use('/participacoes', participacoes);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
-  console.log(`API rodando em http://localhost:${port}`);
+  console.log(`API rodando em http://0.0.0.0:${port}`);
 });
+
