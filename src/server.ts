@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 
@@ -15,8 +18,7 @@ app.use('/missoes', missoes);
 app.use('/modulos', modulos);
 app.use('/participacoes', participacoes);
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`API rodando na porta ${port}`);
 });
-
