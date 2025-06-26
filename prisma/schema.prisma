@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Participacao {
@@ -40,4 +40,13 @@ model Modulo {
   funcao    String
   missao_id Int
   missao    Missao @relation(fields: [missao_id], references: [id])
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  isAdmin   Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

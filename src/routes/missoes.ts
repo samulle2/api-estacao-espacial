@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { autenticar, isAdmin } from '../middleware/auth'; // Importe os middlewares
 
 const router = Router();
 const prisma = new PrismaClient();
+
+// Aplicar autenticação a todas as rotas deste router
+router.use(autenticar);
 
 // GET - Listar todas as missões
 router.get('/', async (req, res) => {
@@ -30,8 +34,8 @@ router.put('/:id', async (req, res) => {
   res.json(missaoAtualizada);
 });
 
-// DELETE - Remover uma missão
-router.delete('/:id', async (req, res) => {
+// DELETE - Remover uma missão: apenas admin
+router.delete('/:id', isAdmin, async (req, res) => { // Adicione isAdmin
   const id = Number(req.params.id);
   await prisma.missao.delete({ where: { id } });
   res.sendStatus(204);

@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { autenticar, isAdmin } from '../middleware/auth'; // Importe os middlewares
 
 const router = Router();
 const prisma = new PrismaClient();
+
+// Aplicar autenticação a todas as rotas deste router
+router.use(autenticar);
 
 // GET - Listar participações
 router.get('/', async (req, res) => {
@@ -54,11 +58,10 @@ router.post('/', async (req, res) => {
       console.error(error);
       res.status(500).json({ erro: 'Erro ao criar participação.' });
     }
-  });
-  
+});
 
-// DELETE - Deletar participação
-router.delete('/:id', async (req, res) => {
+// DELETE - Deletar participação: apenas admin
+router.delete('/:id', isAdmin, async (req, res) => { // Adicione isAdmin
   try {
     await prisma.participacao.delete({
       where: { id: Number(req.params.id) },
