@@ -22,7 +22,7 @@ export const autenticar = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const decoded = jwt.verify(token, SECRET) as any;
-    req.usuario = decoded; // Agora compatível com a extensão
+    req.usuario = decoded; 
     next();
   } catch (error) {
     console.error(error);
@@ -30,7 +30,7 @@ export const autenticar = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-// Correção com tipagem explícita
+
 export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
   if (!req.usuario?.isAdmin) {
     res.status(403).json({ erro: 'Acesso negado. Requer privilégios de administrador.' });

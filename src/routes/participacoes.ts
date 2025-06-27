@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { autenticar, isAdmin } from '../middleware/auth'; // Importe os middlewares
+import { autenticar, isAdmin } from '../middleware/auth'; 
 
 const router = Router();
 const prisma = new PrismaClient();
 
-// Aplicar autenticação a todas as rotas deste router
+
 router.use(autenticar);
 
-// GET - Listar participações
+
 router.get('/', async (req, res) => {
   try {
     const participacoes = await prisma.participacao.findMany({
@@ -24,27 +24,27 @@ router.get('/', async (req, res) => {
   }
 });
 
-// POST - Criar participação
+
 router.post('/', async (req, res) => {
     try {
-      // Garantir que os dados sejam enviados como números
+      
       const { astronautaId, missaoId } = req.body;
   
-      // Verificar se os dados estão corretos
+      
       if (!astronautaId || !missaoId) {
         return res.status(400).json({ erro: 'astronautaId e missaoId são obrigatórios.' });
       }
   
-      // Garantir que os valores sejam números inteiros
+      
       const novoAstronautaId = parseInt(astronautaId, 10);
       const novoMissaoId = parseInt(missaoId, 10);
   
-      // Verificar se a conversão para inteiro foi bem-sucedida
+      
       if (isNaN(novoAstronautaId) || isNaN(novoMissaoId)) {
         return res.status(400).json({ erro: 'astronautaId e missaoId devem ser números válidos.' });
       }
   
-      // Criar a participação
+      
       const novaParticipacao = await prisma.participacao.create({
         data: {
           astronautaId: novoAstronautaId,
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
         },
       });
   
-      // Retornar a participação criada
+      
       res.json(novaParticipacao);
     } catch (error) {
       console.error(error);
@@ -60,8 +60,8 @@ router.post('/', async (req, res) => {
     }
 });
 
-// DELETE - Deletar participação: apenas admin
-router.delete('/:id', isAdmin, async (req, res) => { // Adicione isAdmin
+
+router.delete('/:id', isAdmin, async (req, res) => { 
   try {
     await prisma.participacao.delete({
       where: { id: Number(req.params.id) },

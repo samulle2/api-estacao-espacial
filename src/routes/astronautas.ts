@@ -5,7 +5,7 @@ import { autenticar, isAdmin } from '../middleware/auth';
 const router = Router();
 const prisma = new PrismaClient();
 
-// Aplicar autenticação a todas as rotas deste router
+
 router.use(autenticar);
 
 router.get('/', async (req, res) => {
@@ -26,7 +26,7 @@ router.put('/:id', async (req, res) => {
   res.json(atualizado);
 });
 
-// DELETE: apenas admin
+
 router.delete('/:id', isAdmin, async (req, res) => { // Adicione isAdmin
   await prisma.astronauta.delete({ where: { id: Number(req.params.id) } });
   res.sendStatus(204);

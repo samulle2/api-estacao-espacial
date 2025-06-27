@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 
 router.use(autenticar);
 
-// Função para verificar e obter o usuário autenticado
+
 const getUsuarioAutenticado = (req: Request) => {
   if (!req.usuario) {
     throw new Error('Usuário não autenticado');
@@ -16,7 +16,7 @@ const getUsuarioAutenticado = (req: Request) => {
   return req.usuario;
 };
 
-// Obter perfil do usuário logado
+
 router.get('/perfil', async (req: Request, res: Response) => {
   try {
     const usuarioAutenticado = getUsuarioAutenticado(req);
@@ -48,7 +48,7 @@ router.get('/perfil', async (req: Request, res: Response) => {
   }
 });
 
-// Atualizar perfil
+
 router.put('/perfil', async (req: Request, res: Response) => {
   try {
     const usuarioAutenticado = getUsuarioAutenticado(req);

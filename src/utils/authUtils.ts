@@ -16,9 +16,13 @@ export const verificarToken = (token: string) => {
 };
 
 export const hashSenha = async (senha: string) => {
-  return await bcrypt.hash(senha, 10);
+  return bcrypt.hash(senha, 10);
 };
 
 export const compararSenhas = async (senha: string, hash: string) => {
-  return await bcrypt.compare(senha, hash);
+  const cleanedHash = hash
+    .replace(/^\$2y\$/, '$2a$')  
+    .replace(/^\$2b\$/, '$2a$'); 
+
+  return bcrypt.compare(senha, cleanedHash);
 };
