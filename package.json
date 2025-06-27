@@ -4,8 +4,8 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-  "build": "tsc",
   "start": "node build/index.js",
+  "build": "tsc",
   "prisma:generate": "prisma generate",
   "prisma:migrate": "prisma migrate deploy",
   "postinstall": "npm run prisma:generate && npm run prisma:migrate"
