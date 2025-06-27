@@ -4,15 +4,18 @@
   "main": "dist/server.js",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "build": "prisma generate && prisma migrate deploy && tsc",
-    "start": "node dist/server.js"
+  "build": "tsc",
+  "start": "node build/index.js",
+  "prisma:generate": "prisma generate",
+  "prisma:migrate": "prisma migrate deploy",
+  "postinstall": "npm run prisma:generate && npm run prisma:migrate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^6.7.0",
+    "@prisma/client": "^6.10.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.10",
     "bcryptjs": "^3.0.2",
@@ -20,6 +23,7 @@
     "dotenv": "^16.5.0",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.2",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
